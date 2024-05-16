@@ -9,11 +9,11 @@ import "react-toastify/dist/ReactToastify.css";
 import styles from "./SignUp.module.css";
 
 // images
-import signUpImage from "./images/signup_image.png";
+import signUpImage from "../images/signup_image.png";
 
 // functions
-import { validation } from "./helper/validation";
-import { notify } from "./helper/toast";
+import { validation } from "../helper/validation";
+import { notify } from "../helper/toast";
 
 const SignUp = () => {
   const [userData, setUserData] = useState({

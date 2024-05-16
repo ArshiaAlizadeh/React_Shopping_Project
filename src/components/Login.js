@@ -9,11 +9,11 @@ import "react-toastify/dist/ReactToastify.css";
 import styles from "./Login.module.css";
 
 // images
-import loginImage from "./images/login_image.png";
+import loginImage from "../images/login_image.png";
 
 // functions
-import { validation } from "./helper/validation";
-import { notify } from "./helper/toast";
+import { validation } from "../helper/validation";
+import { notify } from "../helper/toast";
 
 const Login = () => {
   const [userData, setUserData] = useState({
