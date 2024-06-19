@@ -26,6 +26,7 @@ const SignUp = () => {
 
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
+  const [focused, setFocused] = useState({});
 
   useEffect(() => {
     setErrors(validation(userData, "signup"));
@@ -50,6 +51,13 @@ const SignUp = () => {
       ...touched,
       [event.target.name]: true,
     });
+    setFocused({
+      username: false,
+      email: false,
+      password: false,
+      confirmPassword: false,
+      [event.target.name]: true,
+    });
   };
 
   const submitHandler = (event) => {
@@ -64,6 +72,12 @@ const SignUp = () => {
         password: true,
         confirmPassword: true,
         isAccepted: true,
+      });
+      setFocused({
+        username: false,
+        email: false,
+        password: false,
+        confirmPassword: false,
       });
     }
   };
@@ -88,7 +102,7 @@ const SignUp = () => {
           <form onSubmit={submitHandler}>
             <div
               className={
-                errors.username && touched.username
+                errors.username && touched.username && !focused.username
                   ? styles.uncomplete
                   : styles.inputContainer
               }
@@ -102,13 +116,13 @@ const SignUp = () => {
                 onChange={changeHandler}
                 onFocus={touchHandler}
               />
-              {errors.username && touched.username ? (
+              {errors.username && touched.username && !focused.username ? (
                 <span className={styles.error}>{errors.username}</span>
               ) : undefined}
             </div>
             <div
               className={
-                errors.email && touched.email
+                errors.email && touched.email && !focused.email
                   ? styles.uncomplete
                   : styles.inputContainer
               }
@@ -122,13 +136,13 @@ const SignUp = () => {
                 onChange={changeHandler}
                 onFocus={touchHandler}
               />
-              {errors.email && touched.email ? (
+              {errors.email && touched.email && !focused.email ? (
                 <span className={styles.error}>{errors.email}</span>
               ) : undefined}
             </div>
             <div
               className={
-                errors.password && touched.password
+                errors.password && touched.password && !focused.password
                   ? styles.uncomplete
                   : styles.inputContainer
               }
@@ -142,13 +156,15 @@ const SignUp = () => {
                 onChange={changeHandler}
                 onFocus={touchHandler}
               />
-              {errors.password && touched.password ? (
+              {errors.password && touched.password && !focused.password ? (
                 <span className={styles.error}>{errors.password}</span>
               ) : undefined}
             </div>
             <div
               className={
-                errors.confirmPassword && touched.confirmPassword
+                errors.confirmPassword &&
+                touched.confirmPassword &&
+                !focused.confirmPassword
                   ? styles.uncomplete
                   : styles.inputContainer
               }
@@ -162,7 +178,9 @@ const SignUp = () => {
                 onChange={changeHandler}
                 onFocus={touchHandler}
               />
-              {errors.confirmPassword && touched.confirmPassword ? (
+              {errors.confirmPassword &&
+              touched.confirmPassword &&
+              !focused.confirmPassword ? (
                 <span className={styles.error}>{errors.confirmPassword}</span>
               ) : undefined}
             </div>

@@ -23,6 +23,7 @@ const Login = () => {
 
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
+  const [focused, setFocused] = useState({});
 
   useEffect(() => {
     setErrors(validation(userData, "login"));
@@ -40,6 +41,11 @@ const Login = () => {
       ...touched,
       [event.target.name]: true,
     });
+    setFocused({
+      username: false,
+      password: false,
+      [event.target.name]: true,
+    });
   };
 
   const submitHandler = (event) => {
@@ -51,6 +57,10 @@ const Login = () => {
       setTouched({
         username: true,
         password: true,
+      });
+      setFocused({
+        username: false,
+        password: false,
       });
     }
   };
@@ -79,7 +89,7 @@ const Login = () => {
           <form onSubmit={submitHandler}>
             <div
               className={
-                errors.username && touched.username
+                errors.username && touched.username && !focused.username
                   ? styles.uncomplete
                   : styles.inputContainer
               }
@@ -93,13 +103,13 @@ const Login = () => {
                 onChange={changeHandler}
                 onFocus={touchHandler}
               />
-              {errors.username && touched.username ? (
+              {errors.username && touched.username && !focused.username ? (
                 <span className={styles.error}>{errors.username}</span>
               ) : undefined}
             </div>
             <div
               className={
-                errors.password && touched.password
+                errors.password && touched.password && !focused.password
                   ? styles.uncomplete
                   : styles.inputContainer
               }
@@ -113,7 +123,7 @@ const Login = () => {
                 onChange={changeHandler}
                 onFocus={touchHandler}
               />
-              {errors.password && touched.password ? (
+              {errors.password && touched.password && !focused.password ? (
                 <span className={styles.error}>{errors.password}</span>
               ) : undefined}
             </div>
