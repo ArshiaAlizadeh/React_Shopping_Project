@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // react-toastify
 import { ToastContainer } from "react-toastify";
@@ -9,11 +9,11 @@ import "react-toastify/dist/ReactToastify.css";
 import styles from "./SignUp.module.css";
 
 // images
-import signUpImage from "../images/signup_image.png";
+import signUpImage from "../../images/signup_image.png";
 
 // functions
-import { validation } from "../helper/validation";
-import { notify } from "../helper/toast";
+import { validation } from "../../helper/validation";
+import { notify } from "../../helper/toast";
 
 const SignUp = () => {
   const [userData, setUserData] = useState({
@@ -27,6 +27,8 @@ const SignUp = () => {
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
   const [focused, setFocused] = useState({});
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     setErrors(validation(userData, "signup"));
@@ -64,6 +66,7 @@ const SignUp = () => {
     event.preventDefault();
     if (!Object.keys(errors).length) {
       notify("You sign up successfully!", "success");
+      navigate("/main");
     } else {
       notify("Invalid data!", "error");
       setTouched({
