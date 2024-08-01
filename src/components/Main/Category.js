@@ -2,7 +2,7 @@ import React from "react";
 
 const Category = () => {
   return (
-    <div style={{ height: "101vh", paddingTop: "10vh" }}>
+    <div style={{ height: "100vh", paddingTop: "10vh" }}>
       <h1>Category</h1>
     </div>
   );

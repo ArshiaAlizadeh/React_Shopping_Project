@@ -1,0 +1,234 @@
+@font-face {
+  font-family: "Signika Negative";
+  src: url("../../fonts/SignikaNegative-VariableFont_wght.ttf");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  text-decoration: none;
+  list-style-type: none;
+  box-sizing: border-box;
+  font-family: "Signika Negative", sans-serif;
+  user-select: none;
+}
+
+/* Small Screen Size (Mobile) */
+.footer {
+  width: 100%;
+  height: 14vh;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  z-index: 5;
+}
+
+.logoContainer {
+  width: 30%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn {
+  width: 3vh;
+  height: 3vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background-color: transparent;
+  position: relative;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.svgContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  backdrop-filter: blur(4px);
+  letter-spacing: 0.8px;
+  border-radius: 6px;
+  transition: all 0.3s;
+  border: 1px solid rgba(156, 156, 156, 0.466);
+}
+
+.svgIcon {
+  color: #ffffff;
+  font-size: 2vh;
+}
+
+.svgIconInstagram {
+  font-size: 2.3vh;
+}
+
+.bgInstagram {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  background: #f09433;
+  background: -moz-linear-gradient(
+    45deg,
+    #f09433 0%,
+    #e6683c 25%,
+    #dc2743 50%,
+    #cc2366 75%,
+    #bc1888 100%
+  );
+  background: -webkit-linear-gradient(
+    45deg,
+    #f09433 0%,
+    #e6683c 25%,
+    #dc2743 50%,
+    #cc2366 75%,
+    #bc1888 100%
+  );
+  background: linear-gradient(
+    45deg,
+    #f09433 0%,
+    #e6683c 25%,
+    #dc2743 50%,
+    #cc2366 75%,
+    #bc1888 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );
+  z-index: -1;
+  border-radius: 5px;
+  pointer-events: none;
+  transition: all 0.3s;
+}
+
+.bgTelegram {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  background: #24a1de;
+  z-index: -1;
+  border-radius: 5px;
+  pointer-events: none;
+  transition: all 0.3s;
+}
+
+.bgXTwitter {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  background: #000000;
+  z-index: -1;
+  border-radius: 5px;
+  pointer-events: none;
+  transition: all 0.3s;
+}
+
+.btn:hover .bgInstagram,
+.btn:hover .bgTelegram,
+.btn:hover .bgXTwitter {
+  transform: rotate(35deg);
+  transform-origin: bottom;
+}
+
+.btn:hover .svgContainer {
+  background-color: rgba(156, 156, 156, 0.466);
+}
+
+.coperight {
+  font-size: 1.7vh;
+}
+
+/* Medium Screen Size (Tablet) */
+@media screen and (min-width: 500px) {
+  .logoContainer {
+    width: 30%;
+  }
+
+  .btn {
+    width: 5vh;
+    height: 5vh;
+    border-radius: 7px;
+  }
+
+  .svgContainer {
+    border-radius: 10px;
+  }
+
+  .svgIcon {
+    font-size: 3vh;
+  }
+
+  .svgIconInstagram {
+    font-size: 3.3vh;
+  }
+
+  .bgInstagram {
+    border-radius: 9px;
+  }
+
+  .bgTelegram {
+    border-radius: 9px;
+  }
+
+  .bgXTwitter {
+    border-radius: 9px;
+  }
+
+  .coperight {
+    font-size: 2.2vh;
+  }
+}
+
+/* Large Screen Size (Laptop, PC) */
+@media screen and (min-width: 1024px) and (max-height: 1300px) {
+  .logoContainer {
+    width: 12%;
+  }
+
+  .btn {
+    width: 5vh;
+    height: 5vh;
+    border-radius: 7px;
+  }
+
+  .svgContainer {
+    border-radius: 10px;
+  }
+
+  .svgIcon {
+    font-size: 3vh;
+  }
+
+  .svgIconInstagram {
+    font-size: 3.3vh;
+  }
+
+  .bgInstagram {
+    border-radius: 9px;
+  }
+
+  .bgTelegram {
+    border-radius: 9px;
+  }
+
+  .bgXTwitte {
+    border-radius: 9px;
+  }
+
+  .coperight {
+    font-size: 2.2vh;
+  }
+}

@@ -11,6 +11,7 @@ import Category from "./Main/Category";
 import ContactUs from "./Main/ContactUs";
 import AboutUs from "./Main/AboutUs";
 import Cart from "./Main/Cart";
+import Footer from "./Main/Footer";
 
 const Main = () => {
   return (
@@ -36,6 +37,7 @@ const Main = () => {
         <Route path="cart" element={<Cart />} />
         <Route path="*" element={<Navigate to="products" replace />} />
       </Routes>
+      <Footer />
     </div>
   );
 };

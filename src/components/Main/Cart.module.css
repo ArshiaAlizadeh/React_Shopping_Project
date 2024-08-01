@@ -18,11 +18,11 @@
 /* Small Screen Size (Mobile) */
 .container {
   width: 100%;
+  min-height: 100vh;
   padding: calc(10vh + 7vw) 7% 7vw;
 }
 
 .gridContainer {
-  /* background-color: silver; */
   display: grid;
   grid-template-columns: 1fr;
   place-items: start;
@@ -30,7 +30,6 @@
 }
 
 .cartProductsContainer {
-  /* background-color: skyblue; */
   width: 100%;
   display: grid;
   row-gap: 4vw;
@@ -43,7 +42,6 @@
 }
 
 .checkoutContainer {
-  /* background-color: lightgreen; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
