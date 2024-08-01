@@ -1,50 +1,143 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
+
+// styles
+import styles from "./Product.module.css";
+
+// icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCartShopping,
+  faTrash,
+  faPlus,
+  faMinus,
+  faHeart as fillFaHeart,
+} from "@fortawesome/free-solid-svg-icons";
+import { faHeart as borderFaHeart } from "@fortawesome/free-regular-svg-icons";
+
+// context
+import { CartContext } from "../../contexts/CartContextProvider";
+
+// functions
+import { isInCart, productNumber } from "../../helper/functions";
 
 const Product = ({ product }) => {
   const [color, setColor] = useState(product.color[0].name);
+  const [focusedHeartIcon, setFocusedHeartIcon] = useState(false);
+
+  const { state, dispatch } = useContext(CartContext);
 
   const changeHandler = (event) => {
     setColor(event.target.value);
   };
 
   return (
-    <div
-      key={product.id}
-      style={{
-        width: "250px",
-        height: "350px",
-        marginLeft: "100px",
-        borderRadius: "15px",
-        overflow: "hidden",
-        backgroundColor: "rgba(255, 255, 255, 0.2)",
-      }}
-    >
-      <div style={{ backgroundColor: "white", padding: "20px 0" }}>
+    <div key={product.id} className={styles.container}>
+      <div className={styles.imageContainer}>
         <img
           src={product.image[color]}
           alt={product.name}
-          style={{
-            aspectRatio: "1",
-            objectFit: "contain",
-            width: "150px",
-            display: "block",
-            margin: "auto",
-          }}
+          className={styles.image}
         />
       </div>
-      <h4>name: {product.title}</h4>
-      <p>price: {product.price}$</p>
-      {product.color.map((color, i) => (
-        <div key={color.name} onChange={changeHandler}>
-          <span style={{ color: color.hexCode }}>{color.name}:</span>
-          <input
-            type="radio"
-            name={product.id}
-            value={color.name}
-            defaultChecked={i === 0 ? true : false}
-          ></input>
+      <div className={styles.titlePriceContainer}>
+        <h3 className={styles.title}>{product.title}</h3>
+        <div className={styles.price}>{product.price}$</div>
+      </div>
+      <div className={styles.colorName}>Color : {color}</div>
+      <div className={styles.radioContainer}>
+        {product.color.map((colorMap, i) => (
+          <div key={colorMap.name} onChange={changeHandler}>
+            <input
+              type="radio"
+              name={product.id}
+              value={colorMap.name}
+              defaultChecked={i === 0 ? true : false}
+              style={{ backgroundColor: colorMap.hexCode }}
+              className={
+                color === colorMap.name ? styles.radioSelected : undefined
+              }
+            ></input>
+          </div>
+        ))}
+      </div>
+      <div className={styles.iconButtonsContainer}>
+        <FontAwesomeIcon
+          icon={focusedHeartIcon ? fillFaHeart : borderFaHeart}
+          onClick={() =>
+            setFocusedHeartIcon((precFocusedHeartIcon) => !precFocusedHeartIcon)
+          }
+          className={styles.iconHeart}
+        />
+        <Link to="/main/cart" className={styles.cartIconContainer}>
+          <FontAwesomeIcon icon={faCartShopping} className={styles.cartIcon} />
+          <span className={styles.span}>
+            {state.selectedProducts
+              .filter((item) => item.id === product.id)
+              .reduce((total, i) => total + i.number, 0)}
+          </span>
+        </Link>
+
+        <div className={styles.buttonsContainer}>
+          {productNumber(state, product.id, color) > 1 ? (
+            <div
+              className={styles.minusBtn}
+              onClick={() =>
+                dispatch({ type: "DECREASE", payload: product, color: color })
+              }
+            >
+              <FontAwesomeIcon icon={faMinus} />
+            </div>
+          ) : undefined}
+          {productNumber(state, product.id, color) === 1 ? (
+            <div
+              className={styles.trashBtn}
+              onClick={() =>
+                dispatch({
+                  type: "REMOVE_PRODUCT",
+                  payload: product,
+                  color: color,
+                })
+              }
+            >
+              <FontAwesomeIcon icon={faTrash} />
+            </div>
+          ) : undefined}
+          {productNumber(state, product.id, color) > 0 ? (
+            <span className={styles.productNumber}>
+              {productNumber(state, product.id, color)}
+            </span>
+          ) : undefined}
+          {isInCart(state, product.id, color) ? (
+            <div
+              className={styles.plusBtn}
+              onClick={() =>
+                dispatch({ type: "INCREASE", payload: product, color: color })
+              }
+            >
+              <FontAwesomeIcon icon={faPlus} />
+            </div>
+          ) : (
+            <div
+              className={styles.addToCardBtn}
+              onClick={() =>
+                dispatch({
+                  type: "ADD_PRODUCT",
+                  payload: product,
+                  color: color,
+                })
+              }
+            >
+              <div className={styles.addToCardBtnWrapper}>
+                <div className={styles.addToCardBtnText}>Add To Cart</div>
+                <span className={styles.addToCardBtnIcon}>
+                  <FontAwesomeIcon icon={faCartShopping} />
+                </span>
+              </div>
+            </div>
+          )}
         </div>
-      ))}
+      </div>
     </div>
   );
 };

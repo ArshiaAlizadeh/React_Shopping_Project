@@ -2,7 +2,7 @@ import axios from "axios";
 
 const getProducts = async () => {
   const response = await axios.get(
-    "https://run.mocky.io/v3/92a42d03-5c6d-415a-90a9-5bbcd26ee6a3"
+    "https://run.mocky.io/v3/c0778908-1d28-4b9f-b83a-49063e097543"
   );
   return response.data;
 };

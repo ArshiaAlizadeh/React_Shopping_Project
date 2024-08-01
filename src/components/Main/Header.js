@@ -1,12 +1,15 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 //styles
 import styles from "./Header.module.css";
 
-// Icons
+// icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faCartShopping } from "@fortawesome/free-solid-svg-icons";
+
+// context
+import { CartContext } from "../../contexts/CartContextProvider";
 
 const Header = () => {
   const menu = useRef(null);
@@ -18,6 +21,8 @@ const Header = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
+
+  const { state } = useContext(CartContext);
 
   useEffect(() => {
     switch (location.pathname) {
@@ -115,7 +120,7 @@ const Header = () => {
               onClick={clickCartHandler}
             />
             <span className={styles.span} ref={span}>
-              0
+              {state.productsNumber}
             </span>
           </div>
           <Link to="/signup" className={styles.signup}>
