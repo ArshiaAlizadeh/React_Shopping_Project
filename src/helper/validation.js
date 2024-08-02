@@ -1,10 +1,12 @@
 const validation = (userData, type) => {
   const errors = {};
 
-  if (!userData.username.trim()) {
-    errors.username = "Username required";
+  if (!userData.email) {
+    errors.email = "Email required";
+  } else if (!/\S+@\S+\.\S+/.test(userData.email)) {
+    errors.email = "Email address is invalid";
   } else {
-    delete errors.username;
+    delete errors.email;
   }
 
   if (!userData.password) {
@@ -16,12 +18,10 @@ const validation = (userData, type) => {
   }
 
   if (type === "signup") {
-    if (!userData.email) {
-      errors.email = "Email required";
-    } else if (!/\S+@\S+\.\S+/.test(userData.email)) {
-      errors.email = "Email address is invalid";
+    if (!userData.username.trim()) {
+      errors.username = "Username required";
     } else {
-      delete errors.email;
+      delete errors.username;
     }
 
     if (!userData.confirmPassword) {

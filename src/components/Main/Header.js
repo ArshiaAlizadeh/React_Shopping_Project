@@ -8,8 +8,9 @@ import styles from "./Header.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 
-// context
+// contexts
 import { CartContext } from "../../contexts/CartContextProvider";
+import { UserContext } from "../../contexts/UserContextProvider";
 
 const Header = () => {
   const menu = useRef(null);
@@ -23,6 +24,7 @@ const Header = () => {
   const navigate = useNavigate();
 
   const { state } = useContext(CartContext);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     switch (location.pathname) {
@@ -123,12 +125,18 @@ const Header = () => {
               {state.productsNumber}
             </span>
           </div>
-          <Link to="/signup" className={styles.signup}>
-            SignUp
-          </Link>
-          <Link to="/login" className={styles.login}>
-            Login
-          </Link>
+          {user ? (
+            <Link to="profile" className={styles.userProfile}></Link>
+          ) : (
+            <>
+              <Link to="/signup" className={styles.signup}>
+                SignUp
+              </Link>
+              <Link to="/login" className={styles.login}>
+                Login
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </header>

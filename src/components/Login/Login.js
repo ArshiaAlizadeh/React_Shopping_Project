@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { auth, db } from "../../firebase/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 
 // react-toastify
 import { ToastContainer } from "react-toastify";
@@ -15,15 +18,20 @@ import loginImage from "../../images/login_image.png";
 import { validation } from "../../helper/validation";
 import { notify } from "../../helper/toast";
 
+// context
+import { UserContext } from "../../contexts/UserContextProvider";
+
 const Login = () => {
   const [userData, setUserData] = useState({
-    username: "",
+    email: "",
     password: "",
   });
 
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
   const [focused, setFocused] = useState({});
+
+  const { setUser } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -44,25 +52,47 @@ const Login = () => {
       [event.target.name]: true,
     });
     setFocused({
-      username: false,
+      email: false,
       password: false,
       [event.target.name]: true,
     });
   };
 
-  const submitHandler = (event) => {
+  const submitHandler = async (event) => {
     event.preventDefault();
     if (!Object.keys(errors).length) {
-      notify("You login successfully!", "success");
-      navigate("/main");
+      try {
+        const userCredential = await signInWithEmailAndPassword(
+          auth,
+          userData.email,
+          userData.password
+        );
+        const user = userCredential.user;
+
+        const userDocRef = doc(db, "users", user.uid);
+        const userDoc = await getDoc(userDocRef);
+
+        if (userDoc.exists()) {
+          const data = userDoc.data();
+          setUser(data);
+          // console.log("User data:", userDoc.data());
+          notify("You login successfully!", "success");
+          navigate("/main");
+        } else {
+          notify("User does not exist!", "error");
+        }
+      } catch (error) {
+        notify("Error logging in!", "error");
+        console.error("Error logging in:", error);
+      }
     } else {
       notify("Invalid data!", "error");
       setTouched({
-        username: true,
+        email: true,
         password: true,
       });
       setFocused({
-        username: false,
+        email: false,
         password: false,
       });
     }
@@ -92,22 +122,22 @@ const Login = () => {
           <form onSubmit={submitHandler}>
             <div
               className={
-                errors.username && touched.username && !focused.username
+                errors.email && touched.email && !focused.email
                   ? styles.uncomplete
                   : styles.inputContainer
               }
             >
               <input
-                type="text"
-                placeholder="Username"
-                name="username"
+                type="email"
+                placeholder="E-Mail"
+                name="email"
                 autoComplete="off"
-                value={userData.username}
+                value={userData.email}
                 onChange={changeHandler}
                 onFocus={touchHandler}
               />
-              {errors.username && touched.username && !focused.username ? (
-                <span className={styles.error}>{errors.username}</span>
+              {errors.email && touched.email && !focused.email ? (
+                <span className={styles.error}>{errors.email}</span>
               ) : undefined}
             </div>
             <div

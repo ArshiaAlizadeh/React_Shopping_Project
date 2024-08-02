@@ -124,7 +124,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 6.25vh;
+  height: 5vh;
 }
 
 .cartIconContainer {
@@ -139,9 +139,9 @@
   transition: all 0.1s linear;
 }
 
-.cartIcon:hover {
+/* .cartIcon:hover {
   transform: scale(1.1);
-}
+} */
 
 .span {
   position: absolute;
@@ -159,9 +159,23 @@
   transition: all 0.1s linear;
 }
 
-.spanHover {
+/* .spanHover {
   transform: scale(1.1);
+} */
+
+.userProfile {
+  width: 5vh;
+  height: 5vh;
+  background-image: url("../../images/profile_image.png");
+  background-size: 5vh;
+  border-radius: 50%;
+  margin-left: 3%;
+  cursor: pointer;
 }
+
+/* .userProfile:hover {
+  transform: scale(1.1);
+} */
 
 .signup {
   padding: 2%;
@@ -173,9 +187,9 @@
   transition: all 0.1s linear;
 }
 
-.signup:hover {
+/* .signup:hover {
   transform: scale(1.1);
-}
+} */
 
 .login {
   color: #000000;
@@ -183,9 +197,9 @@
   transition: all 0.1s linear;
 }
 
-.login:hover {
+/* .login:hover {
   transform: scale(1.1);
-}
+} */
 
 /* Responsive */
 /* Large Screen Size (Laptop, PC) */
@@ -250,6 +264,7 @@
     justify-content: end;
     align-items: center;
     width: 25%;
+    height: 6.25vh;
   }
 
   .signup {

@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { auth, db } from "../../firebase/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 
 // react-toastify
 import { ToastContainer } from "react-toastify";
@@ -15,6 +18,9 @@ import signUpImage from "../../images/signup_image.png";
 import { validation } from "../../helper/validation";
 import { notify } from "../../helper/toast";
 
+// context
+import { UserContext } from "../../contexts/UserContextProvider";
+
 const SignUp = () => {
   const [userData, setUserData] = useState({
     username: "",
@@ -27,6 +33,8 @@ const SignUp = () => {
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
   const [focused, setFocused] = useState({});
+
+  const { setUser } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -62,11 +70,35 @@ const SignUp = () => {
     });
   };
 
-  const submitHandler = (event) => {
+  const submitHandler = async (event) => {
     event.preventDefault();
     if (!Object.keys(errors).length) {
-      notify("You sign up successfully!", "success");
-      navigate("/main");
+      try {
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          userData.email,
+          userData.password
+        );
+        const user = userCredential.user;
+
+        await setDoc(doc(db, "users", user.uid), {
+          uid: user.uid,
+          username: userData.username,
+          email: userData.email,
+          password: userData.password,
+        });
+        setUser({
+          uid: user.uid,
+          username: userData.username,
+          email: userData.email,
+          password: userData.password,
+        });
+        notify("You sign up successfully!", "success");
+        navigate("/main");
+      } catch (error) {
+        notify("Error signing up!", "error");
+        console.error("Error signing up:", error);
+      }
     } else {
       notify("Invalid data!", "error");
       setTouched({
