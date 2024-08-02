@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
 // styles
@@ -22,10 +22,33 @@ import { CartContext } from "../../contexts/CartContextProvider";
 import { isInCart, productNumber } from "../../helper/functions";
 
 const Product = ({ product }) => {
-  const [color, setColor] = useState(product.color[0].name);
-  const [focusedHeartIcon, setFocusedHeartIcon] = useState(false);
-
   const { state, dispatch } = useContext(CartContext);
+
+  const computeInitialColor = () => {
+    const initialColor = !!state.selectedProducts.find(
+      (p) => p.id === product.id
+    )
+      ? state.selectedProducts.find((p) => p.id === product.id).color
+      : product.color[0].name;
+    return initialColor;
+  };
+
+  const [color, setColor] = useState(computeInitialColor());
+  const [focusedHeartIcon, setFocusedHeartIcon] = useState(false);
+  const [length] = useState(state.selectedProducts.length);
+  const prevLengthRef = useRef();
+
+  useEffect(() => {
+    prevLengthRef.current = length;
+  }, [length]);
+
+  const prevLength = prevLengthRef.current;
+
+  useEffect(() => {
+    if (prevLength === length) {
+      setColor(computeInitialColor());
+    }
+  }, [length, prevLength]);
 
   const changeHandler = (event) => {
     setColor(event.target.value);
@@ -65,7 +88,7 @@ const Product = ({ product }) => {
         <FontAwesomeIcon
           icon={focusedHeartIcon ? fillFaHeart : borderFaHeart}
           onClick={() =>
-            setFocusedHeartIcon((precFocusedHeartIcon) => !precFocusedHeartIcon)
+            setFocusedHeartIcon((prevFocusedHeartIcon) => !prevFocusedHeartIcon)
           }
           className={styles.iconHeart}
         />

@@ -1,14 +1,15 @@
-import React, { useEffect, useContext } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
-import { auth } from "../firebase/firebase";
+import React, { useEffect, useContext, useState, useRef } from "react";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { auth, db } from "../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";
 
 // styles
 import styles from "./Main.module.css";
 
-// context
+// contexts
 import { UserContext } from "../contexts/UserContextProvider";
+import { CartContext } from "../contexts/CartContextProvider";
 
 // components
 import Header from "./Main/Header";
@@ -22,6 +23,21 @@ import Footer from "./Main/Footer";
 
 const Main = () => {
   const { setUser, setLoading } = useContext(UserContext);
+  const { state, dispatch } = useContext(CartContext);
+
+  const location = useLocation();
+  const prevLocationRef = useRef(location.pathname);
+
+  const [prevLocation, setPrevLocation] = useState(location.pathname);
+
+  useEffect(() => {
+    const handleLocationChange = () => {
+      setPrevLocation(prevLocationRef.current);
+      prevLocationRef.current = location.pathname;
+    };
+
+    handleLocationChange();
+  }, [location.pathname]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
@@ -32,6 +48,7 @@ const Main = () => {
 
         if (userSnap.exists()) {
           setUser(userSnap.data());
+          dispatch({ type: "FIREBASE", payload: userSnap.data().data });
         } else {
           console.log("No such document!");
         }
@@ -45,6 +62,20 @@ const Main = () => {
       unsubscribe();
     };
   }, []);
+
+  useEffect(() => {
+    const saveStateToFirebase = async () => {
+      const user = auth.currentUser;
+      if (user) {
+        const userDocRef = doc(db, "users", user.uid);
+        await updateDoc(userDocRef, {
+          data: state,
+        });
+      }
+    };
+
+    saveStateToFirebase();
+  }, [state]);
 
   return (
     <div className={styles.container}>

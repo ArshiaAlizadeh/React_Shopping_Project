@@ -8,11 +8,18 @@ import styles from "./Profile.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
-// context
+// contexts
+import { CartContext } from "../../contexts/CartContextProvider";
 import { UserContext } from "../../contexts/UserContextProvider";
 
 const Profile = () => {
+  const { dispatch } = useContext(CartContext);
   const { user, loading, logout } = useContext(UserContext);
+
+  const logoutHandler = async () => {
+    await logout();
+    dispatch({ type: "CLEAR" });
+  };
 
   return (
     <div className={styles.container}>
@@ -40,7 +47,7 @@ const Profile = () => {
             <p className={styles.fiedlValue}>{user.password}</p>
           ) : undefined}
         </div>
-        <Link to="/main" onClick={logout} className={styles.logout}>
+        <Link to="/main" onClick={logoutHandler} className={styles.logout}>
           Logout
         </Link>
       </div>

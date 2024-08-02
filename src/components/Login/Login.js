@@ -18,7 +18,8 @@ import loginImage from "../../images/login_image.png";
 import { validation } from "../../helper/validation";
 import { notify } from "../../helper/toast";
 
-// context
+// contexts
+import { CartContext } from "../../contexts/CartContextProvider";
 import { UserContext } from "../../contexts/UserContextProvider";
 
 const Login = () => {
@@ -31,6 +32,7 @@ const Login = () => {
   const [touched, setTouched] = useState({});
   const [focused, setFocused] = useState({});
 
+  const { dispatch } = useContext(CartContext);
   const { setUser } = useContext(UserContext);
 
   const navigate = useNavigate();
@@ -75,7 +77,7 @@ const Login = () => {
         if (userDoc.exists()) {
           const data = userDoc.data();
           setUser(data);
-          // console.log("User data:", userDoc.data());
+          dispatch({ type: "FIREBASE", payload: userDoc.data().data });
           notify("You login successfully!", "success");
           navigate("/main");
         } else {

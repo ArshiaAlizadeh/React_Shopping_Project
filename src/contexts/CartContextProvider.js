@@ -84,6 +84,10 @@ const cartReducer = (state, action) => {
         totalPrice: 0,
         checkout: false,
       };
+    case "FIREBASE":
+      return {
+        ...action.payload,
+      };
     default:
       return state;
   }
