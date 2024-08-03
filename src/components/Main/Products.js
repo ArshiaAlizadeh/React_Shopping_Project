@@ -9,14 +9,18 @@ import { ProductsContext } from "../../contexts/ProductsContextProvider";
 // components
 import Product from "./Product";
 
-const Products = () => {
+const Products = ({ category }) => {
   const products = useContext(ProductsContext);
   return (
     <div className={styles.container}>
       <div className={styles.productsContainer}>
-        {products.map((product) => (
-          <Product key={product.id} product={product} />
-        ))}
+        {category === "all"
+          ? products.map((product) => (
+              <Product key={product.id} product={product} />
+            ))
+          : products
+              .filter((item) => item.category === category)
+              .map((product) => <Product key={product.id} product={product} />)}
       </div>
     </div>
   );

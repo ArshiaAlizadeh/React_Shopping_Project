@@ -17,25 +17,33 @@ import { faHeart as borderFaHeart } from "@fortawesome/free-regular-svg-icons";
 
 // context
 import { CartContext } from "../../contexts/CartContextProvider";
+import { UserContext } from "../../contexts/UserContextProvider";
 
 // functions
 import { isInCart, productNumber } from "../../helper/functions";
 
 const Product = ({ product }) => {
   const { state, dispatch } = useContext(CartContext);
+  const { user } = useContext(UserContext);
 
   const computeInitialColor = () => {
-    const initialColor = !!state.selectedProducts.find(
-      (p) => p.id === product.id
-    )
-      ? state.selectedProducts.find((p) => p.id === product.id).color
-      : product.color[0].name;
-    return initialColor;
+    if (user && state.selectedProducts) {
+      const initialColor = !!state.selectedProducts.find(
+        (p) => p.id === product.id
+      )
+        ? state.selectedProducts.find((p) => p.id === product.id).color
+        : product.color[0].name;
+      return initialColor;
+    } else {
+      return product.color[0].name;
+    }
   };
 
   const [color, setColor] = useState(computeInitialColor());
   const [focusedHeartIcon, setFocusedHeartIcon] = useState(false);
-  const [length] = useState(state.selectedProducts.length);
+  const [length] = useState(
+    user && state.selectedProducts ? state.selectedProducts.length : 0
+  );
   const prevLengthRef = useRef();
 
   useEffect(() => {
@@ -45,7 +53,7 @@ const Product = ({ product }) => {
   const prevLength = prevLengthRef.current;
 
   useEffect(() => {
-    if (prevLength === length) {
+    if (prevLength === length && user) {
       setColor(computeInitialColor());
     }
   }, [length, prevLength]);

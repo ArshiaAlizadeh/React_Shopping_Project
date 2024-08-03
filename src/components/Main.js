@@ -15,6 +15,10 @@ import { CartContext } from "../contexts/CartContextProvider";
 import Header from "./Main/Header";
 import Products from "./Main/Products";
 import Category from "./Main/Category";
+import LaptopCategory from "./Main/LaptopCategory";
+import CellphoneCategory from "./Main/CellphoneCategory";
+import HeadphoneCategory from "./Main/HeadphoneCategory";
+import SmartWatchCategory from "./Main/SmartWatchCategory";
 import ContactUs from "./Main/ContactUs";
 import AboutUs from "./Main/AboutUs";
 import Cart from "./Main/Cart";
@@ -93,8 +97,12 @@ const Main = () => {
       </ul>
       <Header />
       <Routes>
-        <Route path="products" element={<Products />} />
+        <Route path="products" element={<Products category="all" />} />
         <Route path="category" element={<Category />} />
+        <Route path="category/laptop" element={<LaptopCategory />} />
+        <Route path="category/cellphone" element={<CellphoneCategory />} />
+        <Route path="category/headphone" element={<HeadphoneCategory />} />
+        <Route path="category/smartwatch" element={<SmartWatchCategory />} />
         <Route path="contact" element={<ContactUs />} />
         <Route path="about" element={<AboutUs />} />
         <Route path="cart" element={<Cart />} />

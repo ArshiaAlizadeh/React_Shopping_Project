@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faInstagram,
   faTelegram,
-  faXTwitter,
+  faGithub,
 } from "@fortawesome/free-brands-svg-icons";
 
 const Footer = () => {
@@ -32,9 +32,9 @@ const Footer = () => {
         </button>
         <button className={styles.btn}>
           <span className={styles.svgContainer}>
-            <FontAwesomeIcon icon={faXTwitter} className={styles.svgIcon} />
+            <FontAwesomeIcon icon={faGithub} className={styles.svgIcon} />
           </span>
-          <span className={styles.bgXTwitter}></span>
+          <span className={styles.bgGithub}></span>
         </button>
       </div>
       <p className={styles.coperight}>

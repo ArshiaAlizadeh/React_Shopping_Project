@@ -17,7 +17,8 @@
 
 /* Small Screen Size (Mobile) */
 .container {
-  color: #000000;
+  /* color: #000000; */
+  color: #343434;
   width: 100%;
   height: 100%;
   border-radius: 15px;

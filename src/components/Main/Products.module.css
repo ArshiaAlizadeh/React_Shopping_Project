@@ -20,6 +20,7 @@
   width: 100%;
   min-height: 100vh;
   padding: calc(10vh + 7vw) 7% 7vw;
+  color: #343434;
 }
 
 .productsContainer {

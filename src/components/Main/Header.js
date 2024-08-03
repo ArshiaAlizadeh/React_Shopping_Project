@@ -40,6 +40,30 @@ const Header = () => {
         contact.current.classList.remove(styles.focusedLink);
         about.current.classList.remove(styles.focusedLink);
         break;
+      case "/main/category/laptop":
+        category.current.classList.add(styles.focusedLink);
+        products.current.classList.remove(styles.focusedLink);
+        contact.current.classList.remove(styles.focusedLink);
+        about.current.classList.remove(styles.focusedLink);
+        break;
+      case "/main/category/cellphone":
+        category.current.classList.add(styles.focusedLink);
+        products.current.classList.remove(styles.focusedLink);
+        contact.current.classList.remove(styles.focusedLink);
+        about.current.classList.remove(styles.focusedLink);
+        break;
+      case "/main/category/headphone":
+        category.current.classList.add(styles.focusedLink);
+        products.current.classList.remove(styles.focusedLink);
+        contact.current.classList.remove(styles.focusedLink);
+        about.current.classList.remove(styles.focusedLink);
+        break;
+      case "/main/category/smartwatch":
+        category.current.classList.add(styles.focusedLink);
+        products.current.classList.remove(styles.focusedLink);
+        contact.current.classList.remove(styles.focusedLink);
+        about.current.classList.remove(styles.focusedLink);
+        break;
       case "/main/contact":
         contact.current.classList.add(styles.focusedLink);
         products.current.classList.remove(styles.focusedLink);
@@ -80,7 +104,7 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.logoIconContainer}>
-        <div className={styles.logo}>Arshia's Logo</div>
+        <div className={styles.logo}>Arshia Tech</div>
         <FontAwesomeIcon
           icon={faBars}
           className={styles.barIcon}
